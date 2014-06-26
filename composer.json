@@ -1,0 +1,23 @@
+{
+	"name": "betterbrief/silverstripe-autocompletefield",
+	"description": "Allow the quick selection of items on the client side and (conventionally) return an ID for ease of use.",
+	"version": "0.1.0",
+	"type": "silverstripe-module",
+	"license": "BSD",
+	"homepage": "http://github.com/BetterBrief/silverstripe-autocompletefield",
+	"keywords": ["autocomplete", "autocompletefield", "silverstripe"],
+	"authors": [
+		{
+			"name": "Will Morgan",
+			"homepage": "https://twitter.com/willmorgan",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"composer/installers": "~1.0",
+		"betterbrief/jsconfig": "dev-master"
+	},
+	"extra": {
+		"installer-name": "autocompletefield"
+	}
+}
