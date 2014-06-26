@@ -15,7 +15,7 @@
 	],
 	"require": {
 		"composer/installers": "~1.0",
-		"betterbrief/jsconfig": "dev-master"
+		"betterbrief/silverstripe-jsconfig": "dev-master"
 	},
 	"extra": {
 		"installer-name": "autocompletefield"
