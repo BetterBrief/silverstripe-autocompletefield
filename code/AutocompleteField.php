@@ -277,4 +277,16 @@ class AutocompleteField extends FormField {
 		return implode('', $output);
 	}
 
+	/**
+	 * Add the extra class to our child elements too
+	 * {@inheritdoc}
+	 */
+	public function addExtraClass($class) {
+		parent::addExtraClass($class);
+		foreach($this->getChildren() as $childField) {
+			$childField->addExtraClass($class);
+		}
+		return $this;
+	}
+
 }
