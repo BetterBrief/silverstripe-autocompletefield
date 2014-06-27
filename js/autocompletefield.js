@@ -42,7 +42,6 @@
 			}
 		},
 		getOption: function(kind, fieldID) {
-			console.log(this);
 			if(fieldID in this[kind]) {
 				return this[kind][fieldID];
 			}
@@ -61,11 +60,11 @@
 				$input.typeahead(null, AutocompleteField.getOption('typeaheadOptions', autocompleteID)(config));
 				// on complete, set the hidden field's value to record.ID
 				$input.on('typeahead:autocompleted typeahead:selected', function(ev, record) {
-					$recordField.val(record[config.recordIDKey]);
+					$recordField.val(record[config.recordIDKey]).trigger('change');
 				});
 				// for all other events, set it to blank
 				$input.on('keyup', function() {
-					$recordField.val('');
+					$recordField.val('').trigger('change');
 				});
 			});
 		}
