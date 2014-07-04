@@ -14,6 +14,11 @@ class AutocompleteField extends FormField {
 	protected $dataSource;
 
 	/**
+	 * @var callable
+	 */
+	protected $recordFormatter;
+
+	/**
 	 * @var FieldList
 	 */
 	protected $children;
@@ -239,9 +244,37 @@ class AutocompleteField extends FormField {
 				'The data source must return an iterable data type'
 			);
 		}
+		return $this->formatData($data);
+	}
+
+	protected function getRecordFormatter() {
+		return $this->recordFormatter;
+	}
+
+	public function setRecordFormatter($formatter) {
+		if(!is_callable($formatter)) {
+			throw new InvalidArgumentException('$formatter must be callable');
+		}
+		$this->recordFormatter = $formatter;
+		return $this;
+	}
+
+	/**
+	 * Format rows to cut down on the data returned to the frontend.
+	 * @param SS_List $data
+	 * @return array
+	 */
+	protected function formatData($data) {
+		$formatter = $this->getRecordFormatter();
+		if($formatter) {
+			return call_user_func($formatter, $data);
+		}
 		// Use toAutocompleteArray to strip out sensitive information like pwds
-		if($data instanceof SS_List && $data->hasMethod('toAutocompleteArray')) {
+		if($data->hasMethod('toAutocompleteArray')) {
 			$data = $data->toAutocompleteArray();
+		}
+		else {
+			$data = $data->toArray();
 		}
 		foreach($data as &$datum) {
 			if($datum instanceof DataObject) {
