@@ -46,6 +46,12 @@ class AutocompleteField extends FormField {
 		 */
 		'displayKey' => null,
 		/**
+		 * The key of the result that will be used to populate the raw value box
+		 * Defaults to searchKey.
+		 * @var string
+		 */
+		'rawFieldKey' => null,
+		/**
 		 * The kind of field the raw value field is. Use this to take advantage
 		 * of native field validation for things like emails, numbers, etc.
 		 * So if no record is found in the auto complete list, the raw value
@@ -135,8 +141,13 @@ class AutocompleteField extends FormField {
 				throw new InvalidArgumentException($field .' is a required configuration key');
 			}
 		}
-		if(!isset($this->config['displayKey'])) {
-			$this->config['displayKey'] = $this->config['searchKey'];
+		$fallbackKeys = array(
+			'displayKey' => 'searchKey',
+			'rawFieldKey' => 'searchKey',
+		);
+		foreach($fallbackKeys as $key => $fallback)
+		if(!isset($this->config[$key])) {
+			$this->config[$key] = $this->config[$fallback];
 		}
 		return $this;
 	}
