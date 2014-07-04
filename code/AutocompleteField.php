@@ -45,6 +45,13 @@ class AutocompleteField extends FormField {
 		 * @var string
 		 */
 		'displayKey' => null,
+		/**
+		 * The kind of field the raw value field is. Use this to take advantage
+		 * of native field validation for things like emails, numbers, etc.
+		 * So if no record is found in the auto complete list, the raw value
+		 * will be validated against the custom field's constraints.
+		 */
+		'rawValueFieldClass' => 'TextField',
 	);
 
 	/**
@@ -72,6 +79,9 @@ class AutocompleteField extends FormField {
 		parent::__construct($name, $title, $value);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setValue($v) {
 		if(is_array($v) && isset($v['_RawValue'], $v['_RecordID'])) {
 			$this->getRecordIDField()->setValue($v['_RecordID']);
@@ -137,8 +147,9 @@ class AutocompleteField extends FormField {
 	 */
 	protected function setupChildren() {
 		$name = $this->getName();
+		$fieldClass = $this->config['rawValueFieldClass'];
 		$this->children = new FieldList(array(
-			TextField::create($name.'[_RawValue]', $this->Title())
+			$fieldClass::create($name.'[_RawValue]', $this->Title())
 				->addExtraClass('autocomplete'),
 			HiddenField::create($name.'[_RecordID]')
 				->addExtraClass('js-autocomplete-record')
@@ -260,6 +271,19 @@ class AutocompleteField extends FormField {
 				$this->getName()
 			))
 		);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 * If no record is found in the auto complete list, the raw value will be
+	 * validated against any custom field's constraints.
+	 */
+	public function validate($validator) {
+		$parentValid = parent::validate($validator);
+		if(!$this->getRecord()) {
+			return $this->getRawField()->validate($validator) && $parentValid;
+		}
+		return $parentValid;
 	}
 
 	/**
