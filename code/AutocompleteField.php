@@ -271,6 +271,7 @@ class AutocompleteField extends FormField {
 		$jsConfig['data'] = $this->getCompleteData();
 		JSConfig::add($autocompleteID, $jsConfig);
 		Requirements::javascript(AUTOCOMPLETEFIELD_BASE.'/js/autocompletefield.js');
+		Requirements::javascript(AUTOCOMPLETEFIELD_BASE.'/vendor/twitter/typeahead.js/dist/typeahead.bundle.min.js');
 		$output = array();
 		foreach($this->getChildren() as $field) {
 			$field->setAttribute('data-autocomplete-id', $autocompleteID);
