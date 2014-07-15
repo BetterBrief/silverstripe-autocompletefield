@@ -1,4 +1,7 @@
 (function() {
+	RegExp.escape= function(s) {
+		return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+	};
 	var AutocompleteField = window.AutocompleteField || {};
 	$.extend(true, AutocompleteField, {
 		// matchers for finding stuff in a dataset
@@ -12,7 +15,7 @@
 						i, j;
 					for(i in tokenized) {
 						if(tokenized[i].length) {
-							substrRegex.push(new RegExp(tokenized[i], 'i'));
+							substrRegex.push(new RegExp(RegExp.escape(tokenized[i]), 'i'));
 						}
 					}
 
