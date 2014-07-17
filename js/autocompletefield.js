@@ -67,6 +67,7 @@
 				// on complete, set the hidden field's value to record.ID
 				$input.on('typeahead:autocompleted typeahead:selected', function(ev, record) {
 					$recordField.val(record[config.recordIDKey]).trigger('change');
+					$input.trigger('autocompletefield:selected');
 				});
 				// for all other events, set it to blank
 				$input.on('keyup', function() {
