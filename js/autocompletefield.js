@@ -32,8 +32,16 @@
 				}
 			}
 		},
-		// options for the second parameter of $.typeahead
+		// options for the first parameter of $.typeahead
 		typeaheadOptions: {
+			_default: {
+				hint: true,
+				highlight: false,
+				minLength: 1
+			}
+		},
+		// options for the second parameter of $.typeahead
+		datasetOptions: {
 			_default: function(config) {
 				return {
 					source: AutocompleteField.matchers._default(config),
@@ -63,7 +71,10 @@
 				var config = JSCONFIG[autocompleteID];
 				var $recordField = $('.js-autocomplete-record[data-autocomplete-id='+autocompleteID+']', fragment);
 				// Set up typeahead
-				$input.typeahead(null, AutocompleteField.getOption('typeaheadOptions', autocompleteID)(config));
+				$input.typeahead(
+					AutocompleteField.getOption('typeaheadOptions', autocompleteID),
+					AutocompleteField.getOption('datasetOptions', autocompleteID)(config)
+				);
 				// on complete, set the hidden field's value to record.ID
 				$input.on('typeahead:autocompleted typeahead:selected', function(ev, record) {
 					$recordField.val(record[config.recordIDKey]).trigger('change');
