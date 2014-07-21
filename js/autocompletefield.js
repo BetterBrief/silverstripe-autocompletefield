@@ -1,4 +1,4 @@
-(function() {
+(function($) {
 	RegExp.escape= function(s) {
 		return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 	};
@@ -92,4 +92,4 @@
 	$(document).ready(function() {
 		AutocompleteField.initialise(document.body);
 	});
-}());
+}(jQuery));
