@@ -81,7 +81,8 @@
 					$input.trigger('autocompletefield:selected');
 				});
 				// for all other events, set it to blank
-				$input.on('keyup', function() {
+				$input.on('keyup', function(ev) {
+					if(ev.keyCode == 13) return;
 					$recordField.val('').trigger('change');
 				});
 			});
