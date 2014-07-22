@@ -82,8 +82,16 @@
 				});
 				// for all other events, set it to blank
 				$input.on('keyup', function(ev) {
-					if(ev.keyCode == 13) return;
-					$recordField.val('').trigger('change');
+					var keycode = ev.keyCode;
+					if(
+						(keycode > 47 && keycode < 58)   || // number keys
+						(keycode > 64 && keycode < 91)   || // letter keys
+						(keycode > 95 && keycode < 112)  || // numpad keys
+						(keycode > 185 && keycode < 193) || // ;=,-./` (in order)
+						(keycode > 218 && keycode < 223)    // [\]' (in order)
+					) {
+						$recordField.val('').trigger('change');
+					}
 				});
 			});
 		}
