@@ -101,7 +101,9 @@ class AutocompleteField extends FormField {
 		else if(is_numeric($v)) {
 			$this->getRecordIDField()->setValue($v);
 			$record = $this->getRecord();
-			$this->getRawField()->setValue($record->{$this->config['displayKey']});
+			if($record) {
+				$this->getRawField()->setValue($record->{$this->config['displayKey']});
+			}
 		}
 		else {
 			$this->getRawField()->setValue($v);
