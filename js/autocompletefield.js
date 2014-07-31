@@ -94,6 +94,15 @@
 					}
 				});
 			});
+		},
+		destroy: function(fragment) {
+			fragment = fragment || document.body;
+			var $inputs = $('input.autocomplete', fragment);
+			$inputs.each(function() {
+				var $input = $(this);
+				$input.typeahead('destroy');
+				$input.off('typeahead:autocomplete typeahead:selected keyup');
+			});
 		}
 	});
 	window.AutocompleteField = AutocompleteField;
