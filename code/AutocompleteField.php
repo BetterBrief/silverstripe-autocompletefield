@@ -63,6 +63,13 @@ class AutocompleteField extends FormField {
 		 * will be validated against the custom field's constraints.
 		 */
 		'rawValueFieldClass' => 'TextField',
+		/**
+		 * Should the data source be cached? Helpful for extensive/expensive
+		 * lookups. Set to false or0 0 for no cache, or specify a number in
+		 * seconds for cache length.
+		 * @var int|boolean
+		 */
+		'cacheDataSource' => 3600,
 	);
 
 	/**
@@ -232,6 +239,20 @@ class AutocompleteField extends FormField {
 	 * @return DataList
 	 */
 	public function getLiveData() {
+		if($this->config['cacheDataSource']) {
+			$cacheID = md5(serialize(array_merge($this->config, array(
+				'fieldID' => $this->getAutocompleteID(),
+			))));
+			return $this->cacheToFile(
+				'generateGetLiveData',
+				$this->config['cacheDataSource'],
+				$cacheID
+			);
+		}
+		return $this->generateGetLiveData();
+	}
+
+	protected function generateGetLiveData() {
 		return call_user_func($this->getDataSource());
 	}
 
