@@ -383,4 +383,17 @@ class AutocompleteField extends FormField {
 		return $this;
 	}
 
+	/**
+	 * Set an attribute on the raw field's input element
+	 *
+	 * @param string $name The name of the attribute
+	 * @param string $value The attribute value
+	 *
+	 * @return AutocompleteField the field
+	 **/
+	public function setAttribute($name, $value) {
+		$this->getRawField()->setAttribute($name, $value);
+		return $this;
+	}
+
 }
