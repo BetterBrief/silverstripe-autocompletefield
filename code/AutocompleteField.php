@@ -95,6 +95,7 @@ class AutocompleteField extends FormField {
 		$this->setName($name);
 		$this->setDataSource($dataSource)->setConfig($userConfig)->setupChildren();
 		parent::__construct($name, $title, $value);
+		$this->getRawField()->setTitle($title);
 	}
 
 	/**
