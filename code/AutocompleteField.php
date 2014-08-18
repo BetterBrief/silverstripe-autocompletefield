@@ -348,6 +348,28 @@ class AutocompleteField extends FormField {
 	 */
 	public function validate($validator) {
 		$parentValid = parent::validate($validator);
+		// If this field is required but doesn't have a record, then check it
+		// at least has a raw value.
+		if($this->Required()) {
+			if(!$this->getRecord()) {
+				$requiredValid = $this->getRawField()->validate($validator);
+				$rawValue = $this->getRawField()->dataValue();
+				if(!($requiredValid && !empty($rawValue))) {
+					$validator->validationError(
+						$this->getRawField()->getName(),
+						_t(
+							'AutocompleteField.VALIDATION',
+							'{title} is required',
+							null,
+							array(
+								'title' => $this->getRawField()->Title(),
+							)
+						),
+						'bad'
+					);
+				}
+			}
+		}
 		if(!$this->getRecord()) {
 			return $this->getRawField()->validate($validator) && $parentValid;
 		}
