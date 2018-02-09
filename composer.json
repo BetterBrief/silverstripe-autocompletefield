@@ -3,7 +3,7 @@
 	"description": "Allow the quick selection of items on the client side and (conventionally) return an ID for ease of use.",
 	"version": "0.2.3",
 	"type": "silverstripe-module",
-	"license": "BSD",
+	"license": "BSD-3-Clause",
 	"homepage": "http://github.com/BetterBrief/silverstripe-autocompletefield",
 	"keywords": ["autocomplete", "autocompletefield", "silverstripe"],
 	"authors": [
